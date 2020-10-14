@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: persistent-pod2
+spec:
+  volumes:
+    - name: persistent-pod-storage
+      persistentVolumeClaim:
+        claimName: demo-pvc
+  containers:
+    - name: persistent-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: persistent-pod-storage
+  nodeName: kube-node1
