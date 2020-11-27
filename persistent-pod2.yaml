@@ -3,17 +3,14 @@ kind: Pod
 metadata:
   name: persistent-pod2
 spec:
+  containers:
+    - name: persistent-container
+      image: nginx
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: persistent-pod-storage
   volumes:
     - name: persistent-pod-storage
       persistentVolumeClaim:
         claimName: demo-pvc
-  containers:
-    - name: persistent-container
-      image: nginx
-      ports:
-        - containerPort: 80
-          name: "http-server"
-      volumeMounts:
-        - mountPath: "/usr/share/nginx/html"
-          name: persistent-pod-storage
   nodeName: kube-node1
